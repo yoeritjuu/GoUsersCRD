@@ -1,43 +1,43 @@
 package models
 
-import(
+import (
 	"github.com/jinzhu/gorm"
 	"github.com/yoeritjuu/GoUsersCRD/pkg/config"
 )
 
 var db *gorm.DB
 
-type User struct{
+type User struct {
 	gorm.Model
-	Name string 'gorm:""json:"name"'
-	Email string 'json:"email"'
+	Name  string `gorm:""json:"name"`
+	Email string `json:"Email"`
 }
 
-func init(){
+func init() {
 	config.Connect()
 	db = config.GetDB()
-	db.AutoMigrate(&User())
-)
-
-func (u *User) CreateUser() *User{
-	db.NewRecord(u)
-	db.Create(&u)
-	return u
+	db.AutoMigrate(&User{})
 }
 
-func GetAllUsers() []User{
-	var Users []User 
+func (b *User) CreateUser() *User {
+	db.NewRecord(b)
+	db.Create(&b)
+	return b
+}
+
+func GetAllUsers() []User {
+	var Users []User
 	db.Find(&Users)
 	return Users
 }
 
-func GetUserById(Id int64) (*User, *User, *gorm.DB){
+func GetUserById(Id int64) (*User, *gorm.DB) {
 	var getUser User
-	db:=db.Where("ID=?", Id).Find(&getUser)
+	db := db.Where("ID=?", Id).Find(&getUser)
 	return &getUser, db
 }
 
-func DeleteUser(ID int64) User{
+func DeleteUser(ID int64) User {
 	var user User
 	db.Where("ID=?", ID).Delete(user)
 	return user

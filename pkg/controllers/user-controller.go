@@ -38,8 +38,8 @@ func GetUserById(w http.ResponseWriter, r *http.Request) {
 func CreateUser(w http.ResponseWriter, r *http.Request) {
 	CreateUser := &models.User{}
 	utils.ParseBody(r, CreateUser)
-	u := CreateUser.CreateUser()
-	res, _ := json.Marshal(u)
+	b := CreateUser.CreateUser()
+	res, _ := json.Marshal(b)
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
 }
